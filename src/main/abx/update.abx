@@ -1,0 +1,12 @@
+---
+exportVersion: "1"
+name: "ADO-update"
+exportId: "e9cef8ad39b4441eb09bedcf10d5e6d2"
+runtime: "python"
+entrypoint: "update.handler"
+timeoutSeconds: 600
+deploymentTimeoutSeconds: 900
+actionType: "SCRIPT"
+memoryInMB: 300
+actionTemplateName: "Custom script"
+actionTemplateNamespace: "com.vmware.automation.abx"

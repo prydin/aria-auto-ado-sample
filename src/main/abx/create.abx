@@ -1,0 +1,20 @@
+---
+exportVersion: "1"
+name: "ADO-create"
+exportId: "8F97171F-2549-4723-A146-ADE187D1D187"
+runtime: "python"
+entrypoint: "create.handler"
+inputs:
+    pat: "secret"
+    org: "prydin"
+    project: "prydin"
+    repoRef: "refs/heads/main"
+    creationPipeline: prydin.ado-demo
+    parameters: "{\"target\":\"World\", \"time\": \"morning\"}"
+    variables: "{}"
+timeoutSeconds: 600
+deploymentTimeoutSeconds: 900
+actionType: "SCRIPT"
+memoryInMB: 300
+actionTemplateName: "Custom script"
+actionTemplateNamespace: "com.vmware.automation.abx"

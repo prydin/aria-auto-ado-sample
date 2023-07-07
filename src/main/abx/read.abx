@@ -1,0 +1,16 @@
+---
+exportVersion: "1"
+name: "ADO-read"
+exportId: "661D678C-4B15-435F-9A34-B753B1DA6FCE"
+runtime: "python"
+entrypoint: "read.handler"
+inputs:
+  pat: "secret"
+  org: ""
+  project: ""
+timeoutSeconds: 600
+deploymentTimeoutSeconds: 900
+actionType: "SCRIPT"
+memoryInMB: 300
+actionTemplateName: "Custom script"
+actionTemplateNamespace: "com.vmware.automation.abx"

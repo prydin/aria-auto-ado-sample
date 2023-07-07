@@ -1,0 +1,18 @@
+---
+exportVersion: "1"
+exportId: "3CA16D19-E1EB-4865-B545-130C748EE5C4"
+name: "ADO-delete"
+runtime: "python"
+entrypoint: "delete.handler"
+inputs:
+    pat: "secret"
+    org: ""
+    project: ""
+    repoRef: "refs/heads/main"
+    deletionPipeline: 1
+    parameters: ""
+    variables: ""
+timeoutSeconds: 600
+deploymentTimeoutSeconds: 900
+actionType: "SCRIPT"
+memoryInMB: 300

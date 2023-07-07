@@ -1,0 +1,26 @@
+properties:
+  pat:
+    type: string
+    description: Personal Access Token
+  org:
+    type: string
+    description: ADO Organization
+  project:
+    type: string
+    description: ADO Project
+  repoRef:
+    type: string
+    description: Repository Reference
+    default: refs/heads/main
+  creationPipeline:
+    type: string
+    decription: Creation Pipeline
+  deletionPipeline:
+    type: string
+    description: Deletion Pipeline
+  parameters:
+    type: object
+    description: Pipeline Parameters
+  variables:
+    type: object
+    description: Pipeline Variables

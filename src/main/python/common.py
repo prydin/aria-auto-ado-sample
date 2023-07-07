@@ -5,32 +5,23 @@ import requests
 
 
 class Job:
-    backend = None
-
-    id = -1
-    state = ""
-    result = ""
-    pipeline_id = -1
-
-    def __init__(self, backend, raw):
+    def __init__(self, backend, job_data):
         self.backend = backend
-        self.id = raw["id"]
-        self.state = raw["state"]
-        self.pipeline_id = raw["pipeline"]["id"]
+        self.job_data = job_data
 
     def refresh(self):
-        resp = self.backend.get(f"/pipelines/{self.pipeline_id}/runs/{self.id}")
-        self.state = resp["state"]
-        self.result = resp.get("result", None)
+        id = self.job_data["id"]
+        pipeline_id = self.job_data['pipeline']['id']
+        self.job_data = self.backend.get(f"/pipelines/{pipeline_id}/runs/{id}")
 
     def get_state(self):
         self.refresh()
-        return self.state
+        return self.job_data["state"]
 
     def wait_for_completion(self):
         while self.get_state() == "inProgress":
             time.sleep(5)
-        return self.result
+        return self.job_data["result"]
 
 
 class Backend:
@@ -47,18 +38,21 @@ class Backend:
         self.headers["Authorization"] = "Basic " + authorization
 
     def post(self, url, payload):
+        url = self.url_root + url
         print(f"POST: {url}")
-        resp = requests.post(self.url_root + url, json=payload, headers=self.headers)
+        resp = requests.post(url, json=payload, headers=self.headers)
         print("Content: " + str(resp.content))
         if resp.status_code < 200 or resp.status_code > 299:
-            raise Exception(f"API Error: {resp.status_code}: {resp.content}")
+            raise Exception(f"API Error: {resp.status_code}: {resp.text}")
         return resp.json(
         )
 
     def get(self, url):
-        resp = requests.get(self.url_root + url, headers=self.headers)
+        url = self.url_root + url
+        print(f"GET: {url}")
+        resp = requests.get(url, headers=self.headers)
         if resp.status_code < 200 or resp.status_code > 299:
-            raise Exception(f"API Error: {resp.status_code}: {resp.content}")
+            raise Exception(f"API Error: {resp.status_code}: {resp.text}")
         return resp.json()
 
     def get_pipeline_id_by_name(self, name):
@@ -82,10 +76,7 @@ class Backend:
 
 
 def run_pipeline(context, inputs, pipeline_name):
-    if "token" in inputs:
-        token = inputs["token"]
-    else:
-        token = context.getSecret(inputs["pat"])
+    token = context.getSecret(inputs["ado_pat"])
     backend = Backend(token, inputs["org"], inputs["project"])
     pipeline_id = backend.get_pipeline_id_by_name(pipeline_name)
     if not pipeline_id:
@@ -95,3 +86,4 @@ def run_pipeline(context, inputs, pipeline_name):
     result = job.wait_for_completion()
     if result != "succeeded":
         raise Exception("Pipeline execution failed")
+    return job.job_data

@@ -5,7 +5,7 @@ exportId: "661D678C-4B15-435F-9A34-B753B1DA6FCE"
 runtime: "python"
 entrypoint: "read.handler"
 inputs:
-  pat: "secret"
+  ado_pat: "secret"
   org: ""
   project: ""
 timeoutSeconds: 600

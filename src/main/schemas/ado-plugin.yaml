@@ -1,7 +1,4 @@
 properties:
-  pat:
-    type: string
-    description: Personal Access Token
   org:
     type: string
     description: ADO Organization
@@ -12,15 +9,35 @@ properties:
     type: string
     description: Repository Reference
     default: refs/heads/main
-  creationPipeline:
-    type: string
-    decription: Creation Pipeline
-  deletionPipeline:
-    type: string
-    description: Deletion Pipeline
-  parameters:
-    type: object
-    description: Pipeline Parameters
   variables:
     type: object
     description: Pipeline Variables
+  parameters:
+    type: object
+    description: Pipeline Parameters
+  creationPipeline:
+    type: string
+    description: Creation Pipeline
+  deletionPipeline:
+    type: string
+    description: Deletion Pipeline
+  jobId:
+    type: string
+    description: Job ID
+    computed: true
+    default: ''
+  pipelineId:
+    type: string
+    description: Pipeline ID
+    computed: true
+    default: ''
+  state:
+    type: string
+    description: Job State
+    computed: true
+    default: ''
+  result:
+    type: string
+    description: Job Result
+    computed: true
+    default: ''

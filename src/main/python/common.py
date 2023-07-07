@@ -55,6 +55,9 @@ class Backend:
             raise Exception(f"API Error: {resp.status_code}: {resp.text}")
         return resp.json()
 
+    def get_job_data(self, pipeline_id, job_id):
+        return self.get(f"/pipelines/{pipeline_id}/runs/{job_id}")
+
     def get_pipeline_id_by_name(self, name):
         resp = self.get("/pipelines?api-version=7.0")
         found = list(filter(lambda p: p["name"] == name, resp["value"]))

@@ -5,7 +5,6 @@ exportId: "8F97171F-2549-4723-A146-ADE187D1D187"
 runtime: "python"
 entrypoint: "create.handler"
 inputs:
-    ado_pat: "secret"
     org: "prydin"
     project: "prydin"
     repoRef: "refs/heads/main"

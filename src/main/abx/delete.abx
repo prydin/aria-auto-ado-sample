@@ -5,7 +5,6 @@ name: "ADO-delete"
 runtime: "python"
 entrypoint: "delete.handler"
 inputs:
-    ado_pat: "secret"
     org: ""
     project: ""
     repoRef: "refs/heads/main"

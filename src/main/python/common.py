@@ -1,4 +1,5 @@
 import base64
+import yaml
 import time
 
 import requests
@@ -64,6 +65,10 @@ class Backend:
         return found[0]["id"] if len(found) else None
 
     def run_pipeline(self, repo_ref, pipeline_id, parameters, variables):
+        # Complex types must be passed as yaml strings
+        for k, v in parameters.items():
+            if type(v) not in (str, int, float, bool):
+                parameters[k] = yaml.safe_dump(v)
         payload = {
             "resources": {
                 "repositories": {

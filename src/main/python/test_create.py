@@ -13,6 +13,13 @@ class TestCreate(unittest.TestCase):
         print(job)
         print(job.wait_for_completion())
 
+    def test_complex(self):
+        op = common.Backend(pat, "prydin", "terraform-poc")
+        job = op.run_pipeline("refs/heads/main", op.get_pipeline_id_by_name("Parameter Test"),
+                              {"string": "string", "object": {"foo": "bar", "bar": "foo"}}, {})
+        print(job)
+        print(job.wait_for_completion())
+
     def test_lookup(self):
         op = common.Backend(pat, "prydin", "terraform-poc")
         pipeline = op.get_pipeline_id_by_name("Terraform Apply")
